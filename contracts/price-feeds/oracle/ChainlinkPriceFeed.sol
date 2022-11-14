@@ -1,0 +1,102 @@
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity ^0.8.13;
+
+interface IAggregatorV3Interface{
+
+function latestRoundData()
+    external
+    view
+    returns (
+      uint80 roundId,
+      int256 answer,
+      uint256 startedAt,
+      uint256 updatedAt,
+      uint80 answeredInRound
+    );
+
+}
+
+// Ethereum mainnet addresses
+// 1// ETH // USD 0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e
+// 2// 1INCH // USD	0xc929ad75B72593967DE83E7F7Cda0493458261D9
+// 3// AAVE // USD 0x547a514d5e3769680Ce22B2361c10Ea13619e8a9
+// 4// ADA // USD 0xAE48c91dF1fE419994FFDa27da09D5aC69c30f55
+// 5// ALCX // USD 0xc355e4C0B3ff4Ed0B49EaACD55FE29B311f42976
+// 6// AMP // USD 0x8797ABc4641dE76342b8acE9C63e3301DC35e3d8
+// 7// ANKR // USD 0x7eed379bf00005CfeD29feD4009669dE9Bcc21ce
+// 8// APE // USD 0xD10aBbC76679a20055E167BB80A24ac851b37056
+// 9// ATOM // USD 0xDC4BDB458C6361093069Ca2aD30D74cc152EdC75
+// 10// AVAX // USD 0xFF3EEb22B5E3dE6e705b44749C2559d704923FD7
+// 11// BADGER // USD 0x66a47b7206130e6FF64854EF0E1EDfa237E65339
+// 12// BAL // USD 0xdF2917806E30300537aEB49A7663062F4d1F2b5F
+// 13// BAND // USD 0x919C77ACc7373D000b329c1276C76586ed2Dd19F
+// 14// BCH // USD 0x9F0F69428F923D6c95B781F89E165C9b2df9789D
+// 15// BIT // USD 0x7b33EbfA52F215a30FaD5a71b3FeE57a4831f1F0
+// 16// BNB // USD 0x14e613AC84a31f709eadbdF89C6CC390fDc9540A
+// 17// BNT // USD 0x1E6cF0D433de4FE882A437ABC654F58E1e78548c
+// 18// BTC // USD 0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c
+// 19// BUSD // USD 0x833D8Eb16D306ed1FbB5D7A2E019e106B960965A
+// 20// CEL // ETH 0x75FbD83b4bd51dEe765b2a01e8D3aa1B020F9d33
+// 21// CELO // ETH 0x9ae96129ed8FE0C707D6eeBa7b90bB1e139e543e
+// 22// COMP // USD 0xdbd020CAeF83eFd542f4De03e3cF0C28A4428bd5
+// 23// CREAM // ETH 0x82597CFE6af8baad7c0d441AA82cbC3b51759607
+// 24// CRO // USD 0x00Cb80Cf097D9aA9A3779ad8EE7cF98437eaE050
+// 25// CRV // USD 0xCd627aA160A6fA45Eb793D19Ef54f5062F20f33f
+// 26// CSPR // USD 0x9e37a8Ee3bFa8eD6783Db031Dc458d200b226074
+// 27// CVX // USD 0xd962fC30A72A84cE50161031391756Bf2876Af5D
+// 28// DAI // USD 0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9
+// 29// DASH // USD 0xFb0cADFEa136E9E343cfb55B863a6Df8348ab912
+// 30// DODO // USD 0x9613A51Ad59EE375e6D8fa12eeef0281f1448739
+// 31// DOGE // USD 0x2465CefD3b488BE410b941b1d4b2767088e2A028
+// 32// DOT // USD 0x1C07AFb8E2B827c5A4739C6d59Ae3A5035f28734
+// 33// DYDX // USD 0x478909D4D798f3a1F11fFB25E4920C959B4aDe0b
+// 34// ENJ // USD 0x23905C55dC11D609D5d11Dc604905779545De9a7
+// 35// ENS // USD 0x5C00128d4d1c2F4f652C267d7bcdD7aC99C16E16
+// 36// EOS // USD 0x10a43289895eAff840E8d45995BBa89f9115ECEe
+// 37// ERN // USD 0x0a87e12689374A4EF49729582B474a1013cceBf8
+// 38// ETC // USD 0xaEA2808407B7319A31A383B6F8B60f04BCa23cE2
+// 39// EURT // USD 0x01D391A48f4F7339aC64CA2c83a07C22F95F587a
+// 40// FARM // ETH 0x611E0d2709416E002A3f38085e4e1cf77c015921
+// 41// FEI // USD 0x31e0a88fecB6eC0a411DBe0e9E76391498296EE9
+// 42// FLOW // USD 0xD9BdD9f5ffa7d89c846A5E3231a093AE4b3469D2
+// 43// FOR // USD 0x456834f736094Fb0AAD40a9BBc9D4a0f37818A54
+// 44// FORTH // USD 0x7D77Fd73E468baECe26852776BeaF073CDc55fA0
+// 45// FRAX // USD 0xB9E1E3A9feFf48998E45Fa90847ed4D467E8BcfD
+
+contract ChainlinkPriceFeed {
+
+    uint256 public I;
+    IAggregatorV3Interface _priceFeed = IAggregatorV3Interface(0xF9680D99D6C9589e2a93a78A04A279e509205945);
+    
+    
+    // constructor() {
+    //     priceFeed = IAggregatorV3Interface(0x8A753747A1Fa494EC906cE90E9f37563A8AF630e);
+    // }
+
+    /**
+     * Returns the latest price
+     */
+    function getLatestPrice(IAggregatorV3Interface priceFeed) public view returns (int) {
+        (
+            /*uint80 roundID*/,
+            int price,
+            /*uint startedAt*/,
+            /*uint timeStamp*/,
+            /*uint80 answeredInRound*/
+        ) = priceFeed.latestRoundData();
+        return price;
+    }
+
+    function ETHgetLatestPrice() public view returns (int) {
+        (
+            /*uint80 roundID*/,
+            int price,
+            /*uint startedAt*/,
+            /*uint timeStamp*/,
+            /*uint80 answeredInRound*/
+        ) = _priceFeed.latestRoundData();
+        return price;
+    }
+
+}
