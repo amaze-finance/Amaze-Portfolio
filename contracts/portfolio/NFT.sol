@@ -15,13 +15,18 @@ contract NFT is ERC721Enumerable, SpecialAddress { // процент с прод
         bool active; // true == amounts are locked
     }
 
+    struct infoPrice {
+        uint256 amount;
+        uint256 price;
+    }
+
     struct saleNFT {
         uint256 price;
         uint256 index; // index in nftOnSale array
         address paymentToken;
     }
 
-    mapping(uint256 => mapping(address => uint256)) internal amounts; // id => address => balance
+    mapping(uint256 => mapping(address => infoPrice)) internal balances; // id => address => balance
     mapping(address => bool) internal statuses;
     mapping(uint256 => infoNFT) internal info;
     mapping(uint256 => saleNFT) public sale; // id => struct
@@ -102,8 +107,12 @@ contract NFT is ERC721Enumerable, SpecialAddress { // процент с прод
         _transfer(from, to, tokenId);
     }
 
-    function setAmount(uint256 _id, address _token, uint256 _balance) external onlyPortfolio {
-        amounts[_id][_token] = _balance;
+    function setAmount(uint256 _id, address _token, uint256 _amount) external onlyPortfolio {
+        balances[_id][_token].amount = _amount;
+    }
+
+    function setPrice(uint256 _id, address _token, uint256 _price) external onlyPortfolio {
+        balances[_id][_token].price = _price;
     }
 
     function setStatus(address _user, bool _type) external onlyPortfolio {
@@ -129,7 +138,7 @@ contract NFT is ERC721Enumerable, SpecialAddress { // процент с прод
         info[_id] = infoNFT(_addresses, _timestamp, _active);
     }
 
-    function getLifePeriod(uint256 _idNFT) public view returns (uint256) {
+    function getLockPeriod(uint256 _idNFT) public view returns (uint256) {
         return block.timestamp - info[_idNFT].creationTime;
     }
 
@@ -154,7 +163,7 @@ contract NFT is ERC721Enumerable, SpecialAddress { // процент с прод
     }
 
     function getAmount(uint256 _id, address _token) external view returns(uint256) {
-        return amounts[_id][_token];
+        return balances[_id][_token].amount;
     }
 
     function getStatus(address _user) external view returns(bool){
