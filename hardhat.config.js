@@ -2,7 +2,7 @@ require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 require('solidity-coverage');
 // require("@nomicfoundation/hardhat-toolbox");
-require("hardhat-gas-reporter");
+// require("hardhat-gas-reporter");
 
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
@@ -19,7 +19,14 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 
 module.exports = {
   solidity: {
-    version: "0.8.13",
+    compilers: [
+      {
+        version: "0.8.13",
+      },
+      {
+        version: "0.7.6",
+      },
+    ],
     settings: {
       optimizer: {
         enabled: true,
@@ -28,12 +35,27 @@ module.exports = {
     },
   },
   networks: {
+    hardhat: {
+      forking: {
+        url: "https://polygon-mainnet.g.alchemy.com/v2/AtVUj7BSbemKccob5NbWlGufZdyIxrOW",
+      },
+      // accounts: {
+      //   count: 200,
+      //   //accountsBalance: ethers.utils.parseEther('10000').toString(),
+      // }
+    },
+    localhost: {
+      url: "http://127.0.0.1:8545",
+    },  
     testnet: {
-      url: MORALIS_URL,
-      accounts: [`0x${PRIVATE_KEY}`]
-    }
+        url: MORALIS_URL,
+        accounts: [`0x${PRIVATE_KEY}`]
+      }
   },
   etherscan: {
     apiKey: API_KEY
   }
 };
+
+
+// npx hardhat test --network localhost

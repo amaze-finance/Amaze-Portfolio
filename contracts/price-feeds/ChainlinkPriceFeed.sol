@@ -73,37 +73,17 @@ function latestRoundData()
 
 contract ChainlinkPriceFeed {
 
-    uint256 public I;
-    IAggregatorV3Interface _priceFeed = IAggregatorV3Interface(0xF9680D99D6C9589e2a93a78A04A279e509205945);
-    
-    
-    // constructor() {
-    //     priceFeed = IAggregatorV3Interface(0x8A753747A1Fa494EC906cE90E9f37563A8AF630e);
-    // }
-
     /**
      * Returns the latest price
      */
-    function getLatestPrice(IAggregatorV3Interface priceFeed) public view returns (int) {
+    function getLatestPrice(address priceFeed) public view returns (int) {
         (
             /*uint80 roundID*/,
             int price,
             /*uint startedAt*/,
             /*uint timeStamp*/,
             /*uint80 answeredInRound*/
-        ) = priceFeed.latestRoundData();
+        ) = IAggregatorV3Interface(priceFeed).latestRoundData();
         return price;
     }
-
-    function ETHgetLatestPrice() public view returns (int) {
-        (
-            /*uint80 roundID*/,
-            int price,
-            /*uint startedAt*/,
-            /*uint timeStamp*/,
-            /*uint80 answeredInRound*/
-        ) = _priceFeed.latestRoundData();
-        return price;
-    }
-
 }
