@@ -582,10 +582,12 @@ describe("Portfolio", async function () {
 
         expect(await nft.getStatus(user1_address)).to.equal(false);
         expect(await dai.balanceOf(owner)).to.equal(ether("500"));
+        expect(await dai.balanceOf('0x70997970C51812dc3A010C7d01b50e0d17dc79C8')).to.equal(ether("0"));
         expect(await dai.approve(portfolio.address, ether("100")));
         expect(await portfolio.buyPremium());
         expect(await nft.getStatus(owner)).to.equal(true);
         expect(await dai.balanceOf(owner)).to.equal(ether("400"));
+        expect(await dai.balanceOf('0x70997970C51812dc3A010C7d01b50e0d17dc79C8')).to.equal(ether("100"));
 
         await expect (portfolio.buyPremium()).to.be.revertedWith("You alredy get premium status");
     });

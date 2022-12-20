@@ -8,12 +8,21 @@ import "@uniswap/v3-periphery/contracts/libraries/OracleLibrary.sol";
 contract UniswapPriceFeed {
     address public factory;
 
+    /// @notice Constructor
+    /// @param factory_ address of V3 uniswap factory pools
     constructor(
         address factory_
     ) {
         factory = factory_;
     }
 
+    /// @notice Returns the latest price of token
+    /// @param tokenIn token for which we are requesting a price 
+    /// @param tokenOut token in which we request a price
+    /// @param amountIn 1 * 10 ** decimals 
+    /// @param secondsAgo price for 10 seconds ago
+    /// @param _fee fee of pool
+    /// @return amountOut price of tokenIn 
     function estimateAmountOut(
         address tokenIn,
         address tokenOut,
@@ -58,10 +67,14 @@ contract UniswapPriceFeed {
         );
     }
 
+    /// @notice Set factory address
+    /// @param _newAddress new factory address
     function setFactory(address _newAddress) external {
         factory = _newAddress;
     }
 
+    /// @notice Get factory address
+    /// @return factory factory address
     function getFactory() external view returns(address){
         return factory;
     }

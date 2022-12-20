@@ -19,9 +19,9 @@ function latestRoundData()
 
 contract ChainlinkPriceFeed {
 
-    /**
-     * Returns the latest price
-     */
+    /// @notice Returns the latest price of token
+    /// @param priceFeed address chainlink proxi for token
+    /// @return price of token
     function getLatestPrice(address priceFeed) public view returns (int) {
         (
             /*uint80 roundID*/,

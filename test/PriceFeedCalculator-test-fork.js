@@ -76,6 +76,10 @@ describe("Calculator", async function () {
         await expect(calculator.setProxyInfo([BTC, DAI], [BTC])).to.be.revertedWith("Calculator: Different size");
         await expect(calculator.setProxyInfo([BTC], [BTC])).to.ok;
 
+        await expect(calculator.connect(impersonatedSigner).setUniswapFees([BTC], [FEE])).to.be.revertedWith("Not special address");
+        await expect(calculator.setUniswapFees([BTC, DAI], [FEE])).to.be.revertedWith("Calculator: Different size");
+        await expect(calculator.setUniswapFees([DAI], [FEE])).to.ok;
+
         const priceBTCLink1 = await calculator.getTokensPrice([BTC]);
         const priceBTCLink = await priceContract.getLatestPrice(BTC);
         console.log(`price: ${priceBTCLink1}`);
@@ -96,10 +100,10 @@ describe("Calculator", async function () {
         expect(await calculator.setUniswapPriceFeed(twap.address)).to.ok;
         expect(await calculator.uniswapPriceFeed()).to.equal(twap.address);
 
-        await expect(calculator.connect(impersonatedSigner).setUsdt(USDC)).to.be.revertedWith("Not special address");
-        expect(await calculator.usdt()).to.equal(USDC);
-        expect(await calculator.setUsdt(USDC)).to.ok;
-        expect(await calculator.usdt()).to.equal(USDC);
+        await expect(calculator.connect(impersonatedSigner).setUsd(USDC)).to.be.revertedWith("Not special address");
+        expect(await calculator.usd()).to.equal(USDC);
+        expect(await calculator.setUsd(USDC)).to.ok;
+        expect(await calculator.usd()).to.equal(USDC);
 
         const priceWETHUni1 = await calculator.getTokensPrice([WETH]);
         const priceWETHUni = await twap.estimateAmountOut(WETH, USDC, 10n ** DECIMALS_1, 10, FEE)
@@ -129,78 +133,4 @@ describe("Calculator", async function () {
         console.log(await mock1.decimals());
     });
 
-    // it("get BTC price in USD, statusPriceFeedUniswap == false", async () => {
-    //     const ChainlinkPriceFeed = await ethers.getContractFactory("ChainlinkPriceFeed");
-    //     const priceContract = await ChainlinkPriceFeed.deploy();
-    //     await priceContract.deployed();
-
-    //     const UniswapV3Twap = await ethers.getContractFactory("UniswapPriceFeed");
-    //     const twap = await UniswapV3Twap.deploy(FACTORY);
-    //     await twap.deployed();
-
-    //     const Calculator = await ethers.getContractFactory("Calculator");
-    //     await expect(Calculator.deploy(priceContract.address, twap.address, DAI, ethUSDC, [BTC, DAI], [FEE])).to.be.revertedWith("Calculator: Different size");
-
-    //     const calculator = await Calculator.deploy(priceContract.address, twap.address, DAI, ethUSDC, [BTC], [FEE]);
-    //     await calculator.deployed();
-
-    //     const address = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
-    //     await helpers.impersonateAccount(address);
-    //     const impersonatedSigner = await ethers.getSigner(address);
-
-    //     await expect(calculator.connect(impersonatedSigner).setProxyInfo([BTC], [BTC], [true], [18])).to.be.revertedWith("Not special address");
-    //     expect(await calculator.setSpecialAddress(impersonatedSigner)).to.ok;
-    //     await expect(calculator.connect(impersonatedSigner).setProxyInfo([BTC, DAI], [BTC], [true], [18])).to.be.revertedWith("Calculator: Different size");
-    //     await calculator.connect(impersonatedSigner).setProxyInfo([BTC], [BTC], [true], [18]);
-
-    //     const priceBTC1 = await calculator.getTokensPrice([BTC], 100);
-    //     const priceBTC = await priceContract.getLatestPrice(BTC);
-    //     console.log(`price: ${priceBTC1}`);
-    //     console.log(`price: ${priceBTC}`);
-    // });
-
-    // it("get BTC price in USD, statusPriceFeedUniswap == true", async () => {
-    //     const ChainlinkPriceFeed = await ethers.getContractFactory("ChainlinkPriceFeed");
-    //     const priceContract = await ChainlinkPriceFeed.deploy();
-    //     await priceContract.deployed();
-
-    //     const UniswapV3Twap = await ethers.getContractFactory("UniswapPriceFeed");
-    //     const twap = await UniswapV3Twap.deploy(FACTORY);
-    //     await twap.deployed();
-    //     console.log("A");
-    //     const Calculator = await ethers.getContractFactory("Calculator");
-    //     const calculator = await Calculator.deploy(priceContract.address, twap.address, DAI, ethUSDC, [BTC], [FEE]);
-    //     await calculator.deployed();
-
-    //     expect(await calculator.statusPriceFeedUniswap()).to.equal(false);
-    //     expect(await calculator.setStatusPriceFeed(true)).to.ok;
-    //     expect(await calculator.statusPriceFeedUniswap()).to.equal(true);
-
-    //     const address = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
-    //     await helpers.impersonateAccount(address);
-    //     const impersonatedSigner = await ethers.getSigner(address);
-    //     expect(await calculator.setSpecialAddress(impersonatedSigner)).to.ok;
-    //     await calculator.connect(impersonatedSigner).setProxyInfo([BTC], [BTC], [true], [18]);
-    //     const priceBTC1 = await calculator.getTokensPrice([BTC], 100);
-    //     const priceBTC = await priceContract.getLatestPrice(BTC);
-    //     console.log(`price: ${priceBTC1}`);
-    //     console.log(`price: ${priceBTC}`);
-    // });
-
-    // it("")
-
-    // it("get USDC price in USD", async () => {
-    //     const priceUSDC = await priceContract.getLatestPrice(USDC);
-    //     console.log(`price: ${priceUSDC}`);
-    // });
-
-    // it("get DAI price in USD", async () => {
-    //     const priceDAI = await priceContract.getLatestPrice(DAI);
-    //     console.log(`price: ${priceDAI}`);
-    // });
-
-    // it("get BTC price in USD", async () => {
-    //     const priceBTC_ETH = await priceContract.getLatestPrice(BTC);
-    //     console.log(`price: ${priceBTC_ETH}`);
-    // });
 });

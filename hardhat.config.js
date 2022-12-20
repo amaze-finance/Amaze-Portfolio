@@ -1,6 +1,8 @@
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 require('solidity-coverage');
+require('hardhat-docgen');
+require('@primitivefi/hardhat-dodoc');
 // require("@nomicfoundation/hardhat-toolbox");
 // require("hardhat-gas-reporter");
 
@@ -54,7 +56,17 @@ module.exports = {
   },
   etherscan: {
     apiKey: API_KEY
-  }
+  },
+  docgen: {
+    path: './docs',
+    clear: true,
+    runOnCompile: true,
+  },
+  dodoc: {
+    runOnCompile: true,
+    debugMode: true,
+    // More options...
+  },
 };
 
 

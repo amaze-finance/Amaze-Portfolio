@@ -105,7 +105,7 @@
 //         expect(await dai.connect(owner).approve(portfolio.address, ether("100")));
 //         expect(await portfolio.connect(owner).buyPremium());
 //         expect(await nft.connect(owner).getStatus(owner.address)).to.equal(true);
-//         expect(await dai.connect(owner).balanceOf(owner.address)).to.equal(ether("400"));
+//         expect(await dai.connect(owner).balanceOf(user3.address)).to.equal(ether("100"));
 
 //         await expect (portfolio.connect(owner).buyPremium()).to.be.revertedWith("You alredy get premium status");
 //       });
