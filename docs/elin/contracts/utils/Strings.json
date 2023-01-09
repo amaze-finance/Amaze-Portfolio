@@ -2,7 +2,7 @@
     "methods": {},
     "events": {},
     "errors": {},
-    "path": "/libraries",
+    "path": "elin/contracts/utils",
     "details": "String operations.",
     "name": "Strings"
 }

@@ -252,7 +252,7 @@
         }
     },
     "errors": {},
-    "path": "/libraries",
+    "path": "elin/contracts/token/ERC721/extensions",
     "title": "ERC-721 Non-Fungible Token Standard, optional metadata extension",
     "details": "See https://eips.ethereum.org/EIPS/eip-721",
     "name": "IERC721Metadata"

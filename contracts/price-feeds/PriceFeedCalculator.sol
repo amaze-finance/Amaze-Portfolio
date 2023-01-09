@@ -3,7 +3,6 @@
 pragma solidity 0.8.13;
 
 import "../portfolio/NFT.sol";
-import "../libraries/ERC20.sol";
 import "./ChainlinkPriceFeed.sol";
 import "../interfaces/IUniswapPriceFeed.sol";
 import "../libraries/SpecialAddress.sol";

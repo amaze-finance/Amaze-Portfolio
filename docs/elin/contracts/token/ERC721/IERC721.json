@@ -218,7 +218,7 @@
         }
     },
     "errors": {},
-    "path": "/libraries",
+    "path": "elin/contracts/token/ERC721",
     "details": "Required interface of an ERC721 compliant contract.",
     "name": "IERC721"
 }

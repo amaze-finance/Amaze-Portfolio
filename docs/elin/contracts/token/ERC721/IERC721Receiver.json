@@ -27,7 +27,7 @@
     },
     "events": {},
     "errors": {},
-    "path": "/libraries",
+    "path": "elin/contracts/token/ERC721",
     "title": "ERC721 token receiver interface",
     "details": "Interface for any contract that wants to support safeTransfers from ERC721 asset contracts.",
     "name": "IERC721Receiver"

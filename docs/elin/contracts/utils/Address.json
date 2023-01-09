@@ -2,7 +2,7 @@
     "methods": {},
     "events": {},
     "errors": {},
-    "path": "/libraries",
+    "path": "elin/contracts/utils",
     "details": "Collection of functions related to the address type",
     "name": "Address"
 }
