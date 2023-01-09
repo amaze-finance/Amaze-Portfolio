@@ -2,12 +2,9 @@
 
 pragma solidity ^0.8.13;
 
-// import "../libraries/ERC721Enumerable.sol";
-
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "../libraries/SpecialAddress.sol";
-
 
 /// @title NFT investment portfolios contract
 /// @notice You can only use this contract to get information about the user's portfolio
